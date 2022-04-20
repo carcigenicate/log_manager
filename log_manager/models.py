@@ -2,7 +2,7 @@ from django.db import models
 
 
 class LoggedUser(models.Model):
-    id = models.CharField(max_length=10)
+    user_id = models.CharField(max_length=10)
 
 
 class LogEntry(models.Model):
@@ -15,10 +15,10 @@ class LogEntry(models.Model):
     # There does not seem to be a consistent "shape" to the property data, so storing it as raw JSON seems appropriate.
     properties = models.JSONField()
 
-    user = models.ForeignKey(LoggedUser, on_delete=models.SET_NULL)
+    user = models.ForeignKey(LoggedUser, on_delete=models.SET_NULL, null=True)
 
 
 class LoggedSession(models.Model):
-    id = models.CharField(max_length=10)
+    session_id = models.CharField(max_length=10)
 
-    user = models.ForeignKey(LoggedUser, on_delete=models.SET_NULL)
+    user = models.ForeignKey(LoggedUser, on_delete=models.SET_NULL, null=True)
