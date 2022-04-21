@@ -25,7 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w!t6#ju7)6gcxg^czpk&i+)f-ujmjzu2anb^3gy%cqhnml9%8q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # "runserver" in sys.argv
+DEBUG = "runserver" in sys.argv
+
+DEBUG_PROPAGATE_EXCEPTIONS = DEBUG
 
 ALLOWED_HOSTS = ["brendon-williams-openhouseai.herokuapp.com"]
 
@@ -78,17 +80,25 @@ WSGI_APPLICATION = 'openhouseAiProject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': ''
+if True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    # Leaving blank since they're configured by Heroku.
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': '',
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',
+            'PORT': ''
+        }
+    }
 
 
 # Password validation
@@ -137,4 +147,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20
 }
 
-django_heroku.settings(locals())
+# Allow the Heroku library to configure the database when in production.
+if not DEBUG:
+    django_heroku.settings(locals())
