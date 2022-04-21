@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w!t6#ju7)6gcxg^czpk&i+)f-ujmjzu2anb^3gy%cqhnml9%8q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  #"runserver" in sys.argv
+DEBUG = "runserver" in sys.argv
 
 ALLOWED_HOSTS = ["brendon-williams-openhouseai.herokuapp.com"]
 
